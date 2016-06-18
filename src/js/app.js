@@ -34,4 +34,23 @@ Pebble.addEventListener("appmessage", function(e) {
   
   console.log("Data: " + dict["4"]);
   
+  var req = new XMLHttpRequest();
+  req.open('POST', 'http://10.1.15.27:8000', true);
+  req.onreadystatechange = function(e) 
+    {
+      //console.log("Received Status: " + e.payload.status);
+      if (req.readyState == 4) {
+        if(req.status == 200) {
+          console.log(JSON.stringify(JSON.parse(req.responseText), null, '\t'));
+        }
+      } 
+      else {
+        console.log("Error");
+      }
+    };
+  //http.send(document.commandform.messagebody.value);
+
+  //req.send("{\"on\": true}");
+  req.send(JSON.stringify(dict));
+  
 });
