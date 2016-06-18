@@ -1,0 +1,28 @@
+{
+    "author": "cobxo3bot@gmail.com",
+    "dependencies": {},
+    "keywords": [],
+    "name": "log_acceleration",
+    "pebble": {
+        "capabilities": [
+            ""
+        ],
+        "displayName": "log_acceleration",
+        "enableMultiJS": true,
+        "messageKeys": [],
+        "projectType": "native",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt"
+        ],
+        "uuid": "53f49e41-cc6b-4005-8d40-da6470eea244",
+        "watchapp": {
+            "watchface": false
+        }
+    },
+    "version": "1.0.0"
+}
