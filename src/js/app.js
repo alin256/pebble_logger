@@ -16,6 +16,13 @@ function messageFailureHandler() {
 }
 
 var ip_string = 'http://10.1.15.27:8000';
+if (typeof localStorage.getItem('ip_string') != "undefined")
+  {
+    ip_string = localStorage.getItem('ip_string');
+    // Show the notification
+    Pebble.showSimpleNotificationOnPebble("IP loaded", ip_string);
+  }
+
 
 //show config
 Pebble.addEventListener('showConfiguration', function() {
@@ -29,6 +36,10 @@ Pebble.addEventListener('webviewclosed', function(e) {
   var configData = JSON.parse(decodeURIComponent(e.response));
   console.log("New address: " + configData.ip_input);
   ip_string = configData.ip_input;
+  // Store some data
+  localStorage.setItem('ip_string', ip_string);
+  // Show the notification
+  Pebble.showSimpleNotificationOnPebble("IP updated", ip_string);
 });
 
 // Called when JS is ready
