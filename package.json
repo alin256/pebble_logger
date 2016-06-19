@@ -5,7 +5,7 @@
     "name": "log_acceleration",
     "pebble": {
         "capabilities": [
-            ""
+            "configurable"
         ],
         "displayName": "log_acceleration",
         "enableMultiJS": true,

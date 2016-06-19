@@ -15,6 +15,22 @@ function messageFailureHandler() {
   sendMessage();
 }
 
+var ip_string = 'http://10.1.15.27:8000';
+
+//show config
+Pebble.addEventListener('showConfiguration', function() {
+  var url = 'https://alin256.github.io/accel-log-config/ipconfig.html';
+  Pebble.openURL(url);
+});
+
+//Called when config is executed
+Pebble.addEventListener('webviewclosed', function(e) {
+  // Decode the user's preferences
+  var configData = JSON.parse(decodeURIComponent(e.response));
+  console.log("New address: " + configData.ip_input);
+  ip_string = configData.ip_input;
+});
+
 // Called when JS is ready
 Pebble.addEventListener("ready", function(e) {
   console.log("JS is ready!");
@@ -35,7 +51,9 @@ Pebble.addEventListener("appmessage", function(e) {
   console.log("Data: " + dict["4"]);
   
   var req = new XMLHttpRequest();
-  req.open('POST', 'http://10.1.15.27:8000', true);
+  //req.open('POST', 'http://10.1.15.27:8000', true);
+  req.open('POST', ip_string, true);
+  console.log("Sent to: " + ip_string);
   req.onreadystatechange = function(e) 
     {
       //console.log("Received Status: " + e.payload.status);
