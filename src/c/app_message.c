@@ -135,8 +135,30 @@ static void tick_handle(struct tm *tick_time, TimeUnits units_changed){
   try_send_message();
 }
 
+static void end_click_handler(ClickRecognizerRef recognizer, void *context) {
+  // A single click has just occured
+  accel_data_service_unsubscribe();
+  vibes_double_pulse();
+}
+
+static void start_click_handler(ClickRecognizerRef recognizer, void *context) {
+  // A single click has just occured
+  accel_raw_data_service_subscribe(req_num_samples, accel_raw_data_handle);
+  vibes_short_pulse();
+}
+
+
+static void click_config_provider(void *context) {
+  // Subcribe to button click events here
+  //ButtonId id = BUTTON_ID_DOWN;
+  window_single_click_subscribe(BUTTON_ID_DOWN, start_click_handler);
+  window_single_click_subscribe(BUTTON_ID_BACK, end_click_handler);
+}
+
 static void init(void) {
 	s_window = window_create();
+  // Use this provider to add button click subscriptions
+  window_set_click_config_provider(s_window, click_config_provider);
 	window_stack_push(s_window, true);
 	
 	// Register AppMessage handlers
@@ -147,7 +169,7 @@ static void init(void) {
   app_message_register_outbox_sent(outbox_sent_callback);
   
   //subscribe to accel
-  accel_raw_data_service_subscribe(req_num_samples, accel_raw_data_handle);
+  //accel_raw_data_service_subscribe(req_num_samples, accel_raw_data_handle);
   
   //time update
   tick_timer_service_subscribe(SECOND_UNIT, tick_handle);
